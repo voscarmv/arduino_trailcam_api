@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :require_authentication
+  # before_action :require_authentication
   before_action :set_project, only: %i[ show update destroy ]
 
   # GET /projects
