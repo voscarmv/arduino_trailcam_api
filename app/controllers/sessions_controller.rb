@@ -24,6 +24,15 @@ class SessionsController < ApplicationController
     end
   end
 
+  def update
+    Current.session.regenerate_token!
+    response.set_header("Authorization", "Bearer #{Current.session.token}")
+    render_success(
+      message: "Token regenerated.",
+      data: {}
+    )
+  end
+
   # Optional: Implement destroy action for logging out
   def destroy
     Current.session.destroy
