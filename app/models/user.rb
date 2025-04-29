@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  ROLES = %w[admin manager user].freeze
+  ROLES = %w[admin camera user].freeze
   before_validation :set_default_role, on: :create
   validates :role, inclusion: { in: ROLES }
   has_secure_password

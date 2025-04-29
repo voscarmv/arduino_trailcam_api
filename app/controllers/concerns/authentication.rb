@@ -74,4 +74,13 @@ module Authentication
         )
       end
     end
+
+    def require_camera
+      unless Current.user&.role == "camera"
+        render_error(
+          message: "You do not have permission to perform this action.",
+          status: :forbidden
+        )
+      end
+    end
 end
