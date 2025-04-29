@@ -19,6 +19,10 @@ class PhotosController < ApplicationController
     @photo = Photo.new(photo_params)
 
     if @photo.save
+      ActionCable.server.broadcast(
+        "notifications_#{current_user.id}",
+        message: "Your picture has been uploaded successfully!"
+      )
       render json: @photo, status: :created, location: @photo
     else
       render json: @photo.errors, status: :unprocessable_entity
