@@ -1,7 +1,7 @@
 class PhotosController < ApplicationController
   # before_action :require_authentication
   before_action :set_photo, only: %i[ show update destroy ]
-  before_action :require_camera, only: [ :create ]
+  # before_action :require_camera, only: [ :create ]
 
   # GET /photos
   def index
@@ -30,14 +30,14 @@ class PhotosController < ApplicationController
     end
   end
 
-  # PATCH/PUT /photos/1
-  # def update
-  #   if @photo.update(photo_params)
-  #     render json: @photo
-  #   else
-  #     render json: @photo.errors, status: :unprocessable_entity
-  #   end
-  # end
+  PATCH/PUT /photos/1
+  def update
+    if @photo.update(photo_params)
+      render json: @photo
+    else
+      render json: @photo.errors, status: :unprocessable_entity
+    end
+  end
 
   # DELETE /photos/1
   def destroy
