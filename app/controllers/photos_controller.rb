@@ -52,6 +52,6 @@ class PhotosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def photo_params
-      params.expect(photo: [ :title, :image ])
+      params.expect(photo: [ :title, :image, :source ])
     end
 end
