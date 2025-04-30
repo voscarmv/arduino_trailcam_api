@@ -26,7 +26,7 @@ class PhotosController < ApplicationController
     if @photo.save
       ActionCable.server.broadcast(
         "notifications_#{Current.user.id}",
-        { body: "Your picture has been uploaded successfully!" }
+        { body: "New photo taken!", unviewed_photos_count: Current.user.unviewed_photos_count }
       )
       render_success(
         message: "Photo uploaded.",
