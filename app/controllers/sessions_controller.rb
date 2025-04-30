@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   allow_unauthenticated_access only: %i[create]
-  skip_after_action :refresh_session, only: %i[create destroy]
+  skip_after_action :refresh_session, only: %i[create update destroy]
 
   rate_limit to: 10, within: 3.minutes, only: :create, with: -> {
     render_error(
