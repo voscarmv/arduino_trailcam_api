@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_25_204923) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_29_235111) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -43,6 +43,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_25_204923) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "viewed", default: false, null: false
+    t.string "source", default: "undefined"
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_photos_on_user_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -75,6 +79,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_25_204923) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "photos", "users"
   add_foreign_key "projects", "users"
   add_foreign_key "sessions", "users"
 end

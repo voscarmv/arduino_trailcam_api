@@ -5,49 +5,71 @@ class PhotosController < ApplicationController
 
   # GET /photos
   def index
-    @photos = Photo.all
-
-    render json: @photos
-  end
+    @photos = Current.user.photos.all
+    render_success(
+      message: "Photos loaded successfully.",
+      data: { photos: @photos }
+    )  end
 
   # GET /photos/1
   def show
-    render json: @photo
+    render_success(
+      message: "Photo retrieved successfully.",
+      data: { photo: @photo }
+    )
   end
 
   # POST /photos
   def create
-    @photo = Photo.new(photo_params)
+    @photo = Current.user.photos.new(photo_params)
 
     if @photo.save
       ActionCable.server.broadcast(
-        "notifications_#{current_user.id}",
-        message: "Your picture has been uploaded successfully!"
+        "notifications_#{Current.user.id}",
+        { body: "Your picture has been uploaded successfully!" }
       )
-      render json: @photo, status: :created, location: @photo
+      render_success(
+        message: "Photo uploaded.",
+        data: {}
+      )
     else
-      render json: @photo.errors, status: :unprocessable_entity
+      render_error(
+        message: "Upload failed.",
+        errors: @photo.errors,
+        status: :unprocessable_entity
+      )
     end
   end
 
-  PATCH/PUT /photos/1
+  # PATCH/PUT /photos/1
   def update
     if @photo.update(photo_params)
-      render json: @photo
+      render_success(
+        message: "Photo updated successfully.",
+        data: { photo: @photo }
+      )
     else
-      render json: @photo.errors, status: :unprocessable_entity
+      render_error(
+        message: "Photo update failed.",
+        errors: @photo.errors,
+        status: :unprocessable_entity
+      )
     end
   end
 
   # DELETE /photos/1
   def destroy
     @photo.destroy!
+    render_success(
+      message: "Photo deleted successfully.",
+      data: {}
+    )
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_photo
-      @photo = Photo.find(params.expect(:id))
+      @photo = Current.user.photos.find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.
