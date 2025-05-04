@@ -59,3 +59,7 @@ Remember to use the following settings:
 ### Start command
 
 `$ rails db:setup && bundle exec rails server -b 0.0.0.0 -e production`
+
+### Environment Variables
+
+Set `RAILS_MASTER_KEY` to whatever is in `config/credentials/production.key`
