@@ -6,16 +6,34 @@ class PhotosController < ApplicationController
   # GET /photos
   def index
     @photos = Current.user.photos.all
+    image_urls = @photos.map do |photo|
+        {
+            id: photo.id,
+            title: photo.title,
+            created_at: photo.created_at,
+            viewed: photo.viewed,
+            source: photo.source,
+            image_url: photo.image.url
+        }
+      end
     render_success(
       message: "Photos loaded successfully.",
-      data: { photos: @photos }
+      data: { photos: image_urls }
     )  end
 
   # GET /photos/1
   def show
+    photo_record = {
+        id: @photo.id,
+        title: @photo.title,
+        created_at: @photo.created_at,
+        viewed: @photo.viewed,
+        source: @photo.source,
+        image_url: @photo.image.url
+    }
     render_success(
       message: "Photo retrieved successfully.",
-      data: { photo: @photo }
+      data: { photo: photo_record }
     )
   end
 
@@ -74,6 +92,6 @@ class PhotosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def photo_params
-      params.expect(photo: [ :title, :image, :source ])
+      params.expect(photo: [ :title, :viewed, :source ])
     end
 end
