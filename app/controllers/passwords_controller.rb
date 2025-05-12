@@ -3,6 +3,13 @@ class PasswordsController < ApplicationController
   skip_after_action
   before_action :set_user_by_token, only: %i[update]
 
+  rate_limit to: 10, within: 3.minutes, only: :create, with: -> {
+    render_error(
+      message: "Too many password reset attempts. Try again later.",
+      status: :too_many_requests
+    )
+  }
+
   def create
     if user = User.find_by(email_address: params[:email_address])
       PasswordsMailer.reset(user).deliver_now
