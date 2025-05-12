@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
     response.set_header("Authorization", "Bearer #{Current.session.token}")
     render_success(
       message: "Token regenerated.",
-      data: {token: Current.session.token}
+      data: {}
     )
   end
 
