@@ -8,7 +8,7 @@ class PhotosController < ApplicationController
     @photos = Current.user.photos.all
     image_urls = @photos.map do |photo|
         {
-            id: photo.id,
+            key: photo.id,
             title: photo.title,
             created_at: photo.created_at,
             viewed: photo.viewed,
@@ -24,7 +24,7 @@ class PhotosController < ApplicationController
   # GET /photos/1
   def show
     photo_record = {
-        id: @photo.id,
+        key: @photo.id,
         title: @photo.title,
         created_at: @photo.created_at,
         viewed: @photo.viewed,
@@ -92,6 +92,6 @@ class PhotosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def photo_params
-      params.expect(photo: [ :title, :viewed, :source ])
+      params.expect(photo: [ :title, :viewed, :source, :image ])
     end
 end
