@@ -46,6 +46,6 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 end
 
-gem "cloudinary", "~> 2.3"
+gem "cloudinary", "~> 2.4"
 
 gem "rack-cors", "~> 2.0"
